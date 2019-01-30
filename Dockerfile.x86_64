@@ -19,4 +19,5 @@ RUN curl https://raw.githubusercontent.com/q3aql/aria2-static-builds/master/buil
 RUN git clone https://github.com/aria2/aria2.git
 RUN cd aria2 && autoreconf -i
 RUN cd aria2 && curl https://raw.githubusercontent.com/q3aql/aria2-static-builds/master/build-scripts/gnu-linux-config/aria2-x86_64-gnu-linux-config | bash
-RUN cd aria2 %% make && strip src/aria2c
+RUN cd aria2 && curl https://raw.githubusercontent.com/starP-W/aria2-static-build-with-docker/master/replace.sh | bash
+RUN cd aria2 && make && strip src/aria2c
