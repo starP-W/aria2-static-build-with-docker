@@ -1,0 +1,22 @@
+FROM debian:stretch
+
+RUN sed -i 's|/security.|/deb.|g' /etc/apt/sources.list && \
+    sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list
+
+RUN apt update && apt install -y \
+build-essential \
+curl \
+wget \
+git \
+autopoint \
+autoconf \
+gettext \
+libtool \
+pkg-config \
+libcppunit-dev
+
+RUN curl https://raw.githubusercontent.com/starP-W/aria2-static-builds/master/build-scripts/gnu-linux-config/aria2-x86_64-gnu-linux-build-libs | bash
+RUN git clone https://github.com/aria2/aria2.git
+RUN cd aria2 && autoreconf -i
+RUN cd aria2 && curl https://raw.githubusercontent.com/starP-W/aria2-static-builds/master/build-scripts/gnu-linux-config/aria2-x86_64-gnu-linux-config | bash
+RUN cd aria2 && make -j$(cat /proc/cpuinfo| grep "processor"| wc -l) && strip src/aria2c
