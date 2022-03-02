@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian
 
 RUN sed -i 's|/security.|/deb.|g' /etc/apt/sources.list && \
     sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list
